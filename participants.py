@@ -96,6 +96,7 @@ class Player(Participant):
 
     def withdraw_credits(self, amount):
         '''withdraw credits'''
+        if amount < 0: return False
         if self.play_credits - amount >= 0:
             self.add_credits(amount)
             return True

@@ -8,7 +8,13 @@ class Blackjack:
         self.deck = deck
         self.dealer = dealer
         self.players = list(args)
-        self.start_game(self.deck, self.dealer, self.players)
+        self.results = {
+            'blackjack': [],
+            'win': [],
+            'draw': [],
+            'loss': [],
+        }
+        self.start_game()
 
     def add_player(self, player):
         '''adds a player'''
@@ -56,6 +62,7 @@ class Blackjack:
                     break
                 else:
                     print('Not enough credits in account')
+        print('\nALL BETS PLACED\n')
         return bets
 
     def enter_bet(self):
@@ -69,38 +76,31 @@ class Blackjack:
             else:
                 return bet
 
+    def display_playercards(self, player):
+        '''shows the players hand'''
+        print(f'{player.name.capitalize()}s cards are')
+        for card in player.cards:
+            print(card[1], card[0])
 
-    def start_game(self, deck, dealer, players):
+    def start_game(self):
         '''runs a round of blackjack'''
-        active_players = self.check_credits(players)
+        active_players = self.check_credits(self.players)
+
+
         bets = self.player_bets(active_players)
 
-        # print('Bets placed')
-        # print('The dealers face card is...')
-        # print(dealer.cards[0][1], dealer.cards[0][0])
-        # scores = {}
-        # for index, player in enumerate(self.players):
-        #     print(f'Player {index}s cards are')
-        #     for card in player.cards:
-        #         print(card[1], card[0])
-        #     scores[f'Player{index}'] = self.calculate_score(player.cards)
-        # if 21 in scores.values():
-        #     blackjack_string = 'Blackjack for '
-        #     for player, score in scores.items():
-        #         if score == 21:
-        #             blackjack_string += player
-        #             print('removing', player[-1])
-        #             completed_players.append(players.pop(int(player[-1])))
+        print('The dealers face card is...')
+        print(self.dealer.cards[0][1], self.dealer.cards[0][0])
 
-        #     blackjack_string += '!!'
-        #     print(blackjack_string)
+        for player in active_players:
+            self.display_playercards(player)
 
-        #     if self.calculate_score(self.dealer.cards) == 21:
-        #         print('Dealer natural')
+        scores = {player.name: self.calculate_score(player.cards) \
+                  for player in active_players}
 
-        # for player in players:
-        #     hit_stand = input('Hit? (y/n)')
-        #     if hit_stand == 'y':
-        #         player.get_card(deck)
-        #     else:
-        #         completed_players.append(print('standing'))
+        if 21 in scores.values():
+            if self.calculate_score(self.dealer.cards) == 21:
+                self.results['draw'].extend([player for player in active_players if self.calculate_score(player.cards) == 21])
+                self.results['loss'].extend([player for player in active_players if player not in self.results['draw']])
+
+                # PAYOUT

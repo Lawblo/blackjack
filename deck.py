@@ -13,33 +13,33 @@ class Deck:
     }
 
     CARD_VALUES = {
-        'A': [1, 14],
-        '2': [2],
-        '3': [3],
-        '4': [4],
-        '5': [5],
-        '6': [6],
-        '7': [7],
-        '8': [8],
-        '9': [9],
-        '10': [10],
-        'J': [11],
-        'Q': [12],
-        'K': [13]
+        'A': 11,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '10': 10,
+        'J': 10,
+        'Q': 10,
+        'K': 10
     }
 
     def __init__(self) -> None:
         self.deck = []
 
-    def __str__(self) -> str:
-        return f'Deck has {len(self.deck)} cards left'
+    # def __str__(self) -> str:
+    #     return f'Deck has {len(self.deck)} cards left'
 
     def create_deck(self) -> list:
         '''build the deck'''
         new_deck = []
-        for color in self.CARD_COLORS.values():
-            for value in self.CARD_VALUES:
-                new_deck.append([value, color])
+        for symbol in self.CARD_COLORS.values():
+            for name, value in self.CARD_VALUES.items():
+                new_deck.append([name, symbol, value])
         self.deck = new_deck
         return self.deck
 

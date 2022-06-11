@@ -1,34 +1,21 @@
-import blackjack
+'''Handles game objects'''
+from blackjack import Blackjack
 from deck import Deck
+from participants import Player
+from participants import Dealer
 
 
-class Participant:
-    '''asdf'''
-    def __init__(self):
-        self.cards = []
-
-    def get_card(self, deck):
-        '''gets a card from the deck'''
-        self.cards.append(deck.draw_card())
-
-    def get_score(self):
-        '''gets the score'''
-        pass
+deck = Deck()
+deck.create_deck()
+deck.shuffle_deck()
+player1 = Player(deck, 'a')
+player2 = Player(deck, 'b')
+player3 = Player(deck, 'c')
+player4 = Player(deck, 'd')
+dealer = Dealer(deck)
 
 
-class Player(Participant):
-    '''Player specific actions'''
-    pass
-
-
-class Dealer(Participant):
-    '''Dealer specific actions'''
-    pass
-
-a = Deck()
-a.create_deck()
-a.shuffle_deck()
-b = Player()
-b.get_card(a)
-b.get_card(a)
-blackjack.calculate_score(b.cards, Deck.CARD_VALUES)
+player1.add_credits(100)
+player2.add_credits(100)
+# player3.add_credits(100)
+game = Blackjack(deck, dealer, player1, player2, player3)

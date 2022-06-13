@@ -15,6 +15,7 @@ class Blackjack:
             'loss': [],
         }
         self.start_game()
+        self.payout()
 
     def add_player(self, player):
         '''adds a player'''
@@ -82,6 +83,9 @@ class Blackjack:
         for card in player.cards:
             print(card[1], card[0])
 
+    def payout(self):
+        pass
+
     def start_game(self):
         '''runs a round of blackjack'''
         active_players = self.check_credits(self.players)
@@ -102,5 +106,6 @@ class Blackjack:
             if self.calculate_score(self.dealer.cards) == 21:
                 self.results['draw'].extend([player for player in active_players if self.calculate_score(player.cards) == 21])
                 self.results['loss'].extend([player for player in active_players if player not in self.results['draw']])
-
+            else:
+                pass
                 # PAYOUT
